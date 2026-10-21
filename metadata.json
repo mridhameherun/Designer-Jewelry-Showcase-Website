@@ -1,0 +1,6 @@
+{
+  "name": "BLING Fine Jewellery Atelier",
+  "description": "Hand-forged 18k solid gold and ethically sourced top 1% GIA-certified diamond jewellery. Explore bridal rings, daily icons, rare gemstones, and bespoke 3D CAD co-creation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

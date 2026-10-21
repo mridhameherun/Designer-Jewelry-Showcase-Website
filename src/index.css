@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-obsidian: #242325;
+    --color-alabaster: #FDFBF7;
+    --color-champagne: #9D814D;
+    --color-champagne-light: #D5C096;
+    --color-canvas: #F5F1E6;
+    --color-surface-alt: #F7F3E8;
+    --color-hairline: #636364;
+    --color-accent-violet: #4732D4;
+    --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #FDFBF7;
+    color: #242325;
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.font-display-sans {
+  font-family: var(--font-display);
+}
+
+.font-editorial-serif {
+  font-family: var(--font-serif);
+}
+
+.font-tabular-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes subtleKenBurns {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.06) translate3d(-1%, -1%, 0);
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.animate-slow-spin {
+  animation: slowSpin 24s linear infinite;
+}
+
+.animate-ken-burns {
+  animation: subtleKenBurns 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slow-spin,
+  .animate-ken-burns {
+    animation: none;
+  }
+}
