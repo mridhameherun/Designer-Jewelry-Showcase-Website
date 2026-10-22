@@ -99,8 +99,8 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
     const relY = (e.clientY - rect.top) / rect.height - 0.5;
 
     gsap.to(frame, {
-      rotateY: relX * 7,
-      rotateX: -relY * 7,
+      rotateY: relX * 8,
+      rotateX: -relY * 8,
       transformPerspective: 900,
       duration: 0.6,
       ease: 'power2.out',
@@ -128,11 +128,11 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
     const startTime = performance.now();
 
     const flares = [
-      { x: 0.34, y: 0.62, r: 42, speed: 0.0007, phase: 0.2, hue: 42 },
-      { x: 0.48, y: 0.56, r: 58, speed: 0.0009, phase: 1.5, hue: 205 },
-      { x: 0.62, y: 0.68, r: 36, speed: 0.0006, phase: 2.8, hue: 38 },
-      { x: 0.28, y: 0.74, r: 32, speed: 0.0008, phase: 4.1, hue: 255 },
-      { x: 0.74, y: 0.32, r: 48, speed: 0.0005, phase: 5.0, hue: 45 },
+      { x: 0.34, y: 0.62, r: 48, speed: 0.0007, phase: 0.2, hue: 42 },
+      { x: 0.48, y: 0.56, r: 64, speed: 0.0009, phase: 1.5, hue: 205 },
+      { x: 0.62, y: 0.68, r: 42, speed: 0.0006, phase: 2.8, hue: 38 },
+      { x: 0.28, y: 0.74, r: 38, speed: 0.0008, phase: 4.1, hue: 255 },
+      { x: 0.74, y: 0.32, r: 54, speed: 0.0005, phase: 5.0, hue: 45 },
     ];
 
     const renderFrame = (now: number) => {
@@ -150,12 +150,12 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
 
         const grad = ctx.createRadialGradient(cx, cy, 1, cx, cy, radius);
         if (activeScene === 'pave') {
-          grad.addColorStop(0, 'rgba(255, 253, 245, 0.75)');
-          grad.addColorStop(0.35, `hsla(${f.hue}, 85%, 78%, ${0.28 * pulse})`);
+          grad.addColorStop(0, 'rgba(255, 253, 245, 0.85)');
+          grad.addColorStop(0.35, `hsla(${f.hue}, 88%, 78%, ${0.34 * pulse})`);
           grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         } else {
-          grad.addColorStop(0, 'rgba(252, 244, 214, 0.55)');
-          grad.addColorStop(0.45, `rgba(213, 180, 115, ${0.22 * pulse})`);
+          grad.addColorStop(0, 'rgba(252, 244, 214, 0.65)');
+          grad.addColorStop(0.45, `rgba(213, 180, 115, ${0.28 * pulse})`);
           grad.addColorStop(1, 'rgba(252, 249, 235, 0)');
         }
 
@@ -165,10 +165,10 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
         ctx.fill();
 
         // Draw crisp 4-point star facet glint at peak refraction
-        if (pulse > 0.62) {
-          const starLen = 10 + pulse * 14;
-          ctx.strokeStyle = `rgba(255, 252, 240, ${(pulse - 0.5) * 0.9})`;
-          ctx.lineWidth = 1.1;
+        if (pulse > 0.58) {
+          const starLen = 12 + pulse * 16;
+          ctx.strokeStyle = `rgba(255, 250, 228, ${(pulse - 0.45) * 0.95})`;
+          ctx.lineWidth = 1.25;
           ctx.beginPath();
           ctx.moveTo(cx - starLen, cy);
           ctx.lineTo(cx + starLen, cy);
@@ -191,14 +191,20 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
 
   return (
     <div className="relative w-full h-full flex flex-col justify-between select-none">
+      {/* Ambient Golden Caustic Glow Halo Behind the Visual Showcase */}
+      <div
+        aria-hidden="true"
+        className="absolute -inset-6 bg-[radial-gradient(circle_at_35%_40%,rgba(213,192,150,0.28),rgba(71,50,212,0.08)_55%,transparent_75%)] blur-2xl pointer-events-none"
+      />
+
       {/* Main Editorial Visual Composition with Generous Breathing Room */}
       <div className="relative w-full grid grid-cols-12 gap-6 lg:gap-8 items-stretch">
-        {/* Primary Macro / Editorial Frame with 3D GSAP Tilt */}
+        {/* Primary Macro / Editorial Frame with 3D GSAP Tilt & Gilded Gallery Frame */}
         <div
           ref={primaryFrameRef}
           onMouseMove={handleFrameMouseMove}
           onMouseLeave={handleFrameMouseLeave}
-          className="col-span-12 sm:col-span-8 relative overflow-hidden bg-[#1B1A1C] border border-[#242325]/10 h-[440px] sm:h-[520px] will-change-transform"
+          className="col-span-12 sm:col-span-8 relative overflow-hidden bg-[#161517] border border-[#9D814D]/45 shadow-[0_30px_70px_-20px_rgba(36,35,37,0.35)] h-[450px] sm:h-[530px] will-change-transform group"
         >
           {/* Scene 1: Macro Slow-Motion Pavé Diamond Band Refraction */}
           <img
@@ -233,10 +239,25 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
             className="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen"
           />
 
+          {/* Inner Gilded Museum Frame Hairline */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-3.5 border border-[#D5C096]/35 pointer-events-none z-10"
+          />
+
+          {/* Top-Left Glassmorphic Optical Telemetry Pill */}
+          <div className="absolute top-6 left-6 z-20 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161517]/75 backdrop-blur-md border border-[#D5C096]/40">
+            <span className="w-2 h-2 rounded-full bg-[#D5C096] animate-pulse" />
+            <span className="font-tabular-mono text-[10px] tracking-[0.2em] uppercase text-[#FDFBF7]">
+              {activeScene === 'pave' ? 'REFRACTIVE INDEX 2.417 · GIA IDEAL' : '18K SOLID GOLD · 750‰ HALLMARK'}
+            </span>
+          </div>
+
           {/* Subtle Bottom Contrast Scrim for Caption */}
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#161517]/90 via-[#161517]/40 to-transparent p-6 sm:p-8 flex items-end justify-between gap-4">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#121113]/95 via-[#121113]/55 to-transparent p-6 sm:p-8 flex items-end justify-between gap-4 z-20">
             <div ref={captionRef} className="space-y-1.5">
-              <p className="font-tabular-mono text-[11px] tracking-[0.18em] uppercase text-[#D5C096]">
+              <p className="font-tabular-mono text-[11px] tracking-[0.2em] uppercase text-[#D5C096] flex items-center gap-2">
+                <span className="animate-twinkle inline-block text-[#EBD5A7]">✦</span>
                 {activeScene === 'pave'
                   ? '01 / Macro Optical Refraction'
                   : '02 / Golden Hour Ritual'}
@@ -250,58 +271,69 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
           </div>
         </div>
 
-        {/* Secondary Oval Inset & Architectural Spec Column */}
+        {/* Secondary Oval Inset & Velvet Obsidian Hallmark Column */}
         <div className="col-span-12 sm:col-span-4 flex sm:flex-col justify-between gap-6 h-full">
-          {/* Oval Sculptural Cutout Frame */}
+          {/* Oval Sculptural Cutout Frame with Double Gold Ring */}
           <button
             ref={ovalFrameRef}
             type="button"
             onClick={() => setActiveScene(activeScene === 'pave' ? 'sunlit' : 'pave')}
             aria-label="Switch hero visual perspective between macro diamond pavé and sunlit layered gold necklaces"
-            className="group relative w-1/2 sm:w-full aspect-[4/5] rounded-full overflow-hidden border border-[#242325]/15 bg-[#242325] focus-visible:outline-2 focus-visible:outline-[#4732D4] transition-transform duration-300 hover:scale-[1.02] cursor-pointer"
+            className="group relative w-1/2 sm:w-full aspect-[4/5] rounded-full p-1.5 border border-[#9D814D]/50 bg-gradient-to-b from-[#D5C096]/30 to-transparent shadow-[0_20px_50px_-15px_rgba(157,129,77,0.3)] focus-visible:outline-2 focus-visible:outline-[#4732D4] transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
           >
-            <img
-              src={
-                activeScene === 'pave'
-                  ? 'assets/jewelry/layered-necklaces.png?v=2'
-                  : 'assets/jewelry/eternity-pave-rings.png?v=2'
-              }
-              alt="Preview alternate perspective"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-[#242325]/20 group-hover:bg-transparent transition-colors flex items-center justify-center p-4">
-              <span className="px-3.5 py-1.5 rounded-full bg-[#FDFBF7]/95 text-[#242325] text-[11px] tracking-widest uppercase font-medium shadow-xs">
-                {activeScene === 'pave' ? 'Sunlit Stack' : 'Macro Pavé'}
-              </span>
+            <div className="w-full h-full rounded-full overflow-hidden relative bg-[#242325]">
+              <img
+                src={
+                  activeScene === 'pave'
+                    ? 'assets/jewelry/layered-necklaces.png?v=2'
+                    : 'assets/jewelry/eternity-pave-rings.png?v=2'
+                }
+                alt="Preview alternate perspective"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#161517]/70 via-transparent to-transparent flex items-end justify-center pb-5 p-4">
+                <span className="px-3.5 py-1.5 rounded-full bg-[#FDFBF7]/95 text-[#242325] text-[10px] font-tabular-mono tracking-widest uppercase font-medium shadow-md">
+                  ✦ {activeScene === 'pave' ? 'Sunlit Stack' : 'Macro Pavé'}
+                </span>
+              </div>
             </div>
           </button>
 
-          {/* Clean Hallmark Card */}
+          {/* High-Contrast Velvet Obsidian & Gold Foil Hallmark Card */}
           <div
             ref={hallmarkCardRef}
-            className="w-1/2 sm:w-full bg-[#F7F3E8] border border-[#242325]/10 p-6 flex flex-col justify-between flex-1"
+            className="w-1/2 sm:w-full bg-[#181719] text-[#FDFBF7] border border-[#9D814D]/45 p-6 flex flex-col justify-between flex-1 relative overflow-hidden shadow-[0_20px_45px_-15px_rgba(36,35,37,0.28)]"
           >
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-tabular-mono text-xs tracking-[0.16em] uppercase text-[#242325]/80">
-                18K · 750‰
-              </span>
+            <div
+              aria-hidden="true"
+              className="absolute -top-12 -right-12 w-28 h-28 rounded-full bg-[#D5C096]/15 blur-xl pointer-events-none"
+            />
+            <div className="flex items-center justify-between gap-2 relative z-10">
+              <div>
+                <span className="font-tabular-mono text-[10px] tracking-[0.2em] uppercase text-[#D5C096] block">
+                  SWISS ASSAY
+                </span>
+                <span className="font-editorial-serif italic text-xl text-gold-foil">
+                  18K · 750‰
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={onExploreCustom}
-                className="w-9 h-9 rounded-full bg-[#242325] text-[#FDFBF7] flex items-center justify-center text-[11px] font-tabular-mono tracking-wider transition-transform duration-200 hover:scale-105 cursor-pointer"
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D5C096] to-[#9D814D] text-[#181719] font-semibold flex items-center justify-center text-[11px] font-tabular-mono tracking-wider transition-transform duration-200 hover:scale-110 shadow-md cursor-pointer"
                 aria-label="Open 3D Bespoke Ring Studio"
-                title="3D CAD Studio"
+                title="Launch Interactive 3D CAD Studio"
               >
-                3D
+                360°
               </button>
             </div>
-            <p className="text-xs text-[#242325]/75 font-light leading-relaxed my-4">
+            <p className="text-xs text-[#FDFBF7]/80 font-light leading-relaxed my-4 relative z-10">
               Every diamond passes a 40x microscopic inspection; 99% of stones inspected are rejected.
             </p>
-            <div className="pt-3 border-t border-[#242325]/10 flex items-center justify-between text-[10px] font-tabular-mono tracking-widest text-[#242325]/70">
+            <div className="pt-3 border-t border-[#D5C096]/25 flex items-center justify-between text-[10px] font-tabular-mono tracking-widest text-[#D5C096] relative z-10">
               <span>GIA TOP 1%</span>
-              <span>·</span>
+              <span>✦</span>
               <span>RJC AUDITED</span>
             </div>
           </div>
@@ -309,18 +341,18 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
       </div>
 
       {/* Interactive Visual Cue Controls Bar */}
-      <div className="mt-6 pt-5 border-t border-[#242325]/10 flex flex-wrap items-center justify-between gap-4">
+      <div className="mt-6 pt-5 border-t border-[#242325]/12 flex flex-wrap items-center justify-between gap-4 relative z-10">
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             type="button"
             onClick={() => setActiveScene('pave')}
             className={`px-4 py-2 rounded-full text-xs tracking-wider uppercase transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer ${
               activeScene === 'pave'
-                ? 'bg-[#242325] text-[#FDFBF7]'
-                : 'border border-[#242325]/25 text-[#242325]/80 hover:border-[#242325]'
+                ? 'bg-[#242325] text-[#D5C096] border border-[#9D814D]/50 shadow-sm'
+                : 'border border-[#242325]/25 text-[#242325]/80 hover:border-[#9D814D]'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5 text-[#9D814D]" />
             Macro Pavé Refraction
           </button>
           <button
@@ -328,11 +360,11 @@ export const MacroRefractionVisual: React.FC<MacroRefractionVisualProps> = ({ on
             onClick={() => setActiveScene('sunlit')}
             className={`px-4 py-2 rounded-full text-xs tracking-wider uppercase transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer ${
               activeScene === 'sunlit'
-                ? 'bg-[#242325] text-[#FDFBF7]'
-                : 'border border-[#242325]/25 text-[#242325]/80 hover:border-[#242325]'
+                ? 'bg-[#242325] text-[#D5C096] border border-[#9D814D]/50 shadow-sm'
+                : 'border border-[#242325]/25 text-[#242325]/80 hover:border-[#9D814D]'
             }`}
           >
-            <Sun className="w-3.5 h-3.5" />
+            <Sun className="w-3.5 h-3.5 text-[#9D814D]" />
             Sunlit Layered 18k Gold
           </button>
         </div>

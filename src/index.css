@@ -66,6 +66,47 @@
   }
 }
 
+@keyframes goldFoilShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes diamondTwinkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.28) rotate(45deg);
+    opacity: 1;
+  }
+}
+
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+  35%, 100% {
+    transform: translateX(240%) skewX(-20deg);
+  }
+}
+
 .animate-slow-spin {
   animation: slowSpin 24s linear infinite;
 }
@@ -74,9 +115,102 @@
   animation: subtleKenBurns 18s ease-in-out infinite;
 }
 
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 34s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-twinkle {
+  animation: diamondTwinkle 4s ease-in-out infinite;
+}
+
+/* 18k Liquid Gold Foil Typography */
+.text-gold-foil {
+  background: linear-gradient(
+    110deg,
+    #8a6a30 0%,
+    #c5a365 22%,
+    #ebd5a7 40%,
+    #9d814d 58%,
+    #d5c096 78%,
+    #8a6a30 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: goldFoilShimmer 9s ease-in-out infinite;
+}
+
+/* Prismatic Royal Indigo & Champagne Foil Accent */
+.text-prismatic-foil {
+  background: linear-gradient(
+    115deg,
+    #4732d4 0%,
+    #6b52ff 28%,
+    #b89758 62%,
+    #8a6a30 82%,
+    #4732d4 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: goldFoilShimmer 10s ease-in-out infinite;
+}
+
+/* Specular Light Sweep on Primary Luxury Buttons */
+.btn-luxury-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxury-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(213, 192, 150, 0.32) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-140%) skewX(-20deg);
+  animation: sheenSweep 6.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Museum Gallery Card Hover Elevation */
+.card-luxury-glow {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.45s ease,
+    background-color 0.45s ease;
+}
+
+.card-luxury-glow:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 65px -18px rgba(157, 129, 77, 0.26),
+    0 8px 24px -8px rgba(36, 35, 37, 0.08);
+  border-color: rgba(157, 129, 77, 0.55);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-slow-spin,
-  .animate-ken-burns {
+  .animate-ken-burns,
+  .animate-marquee,
+  .animate-twinkle,
+  .text-gold-foil,
+  .text-prismatic-foil,
+  .btn-luxury-sheen::after {
     animation: none;
   }
 }
